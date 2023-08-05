@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    environment {
+        GOOGLE_CREDENTIALS = credentials('prefect')
+    }
+    stages {
+        stage('PRODUCTION') {
+            steps {
+                sh '''
+                terraform init
+                terraform apply -auto-approve
+                '''
+            }
+        }
+    }
+}
