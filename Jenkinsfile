@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        GOOGLE_CREDENTIALS = credentials('jenkins-service-gcp')
+        GOOGLE_CREDENTIALS = credentials('prefect')
     }
     stages {
         stage('DEPLOYING INFRASTRUCTURE') {
