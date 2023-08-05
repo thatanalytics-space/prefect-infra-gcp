@@ -14,6 +14,9 @@ sudo apt-get install -y \
     python3-dateutil \
     tmux
 
+sudo apt-get install -y python3
+sudo apt-get install -y python3-pip
+
 # Install Python packages
 pip install prefect prefect-gcp gcsfs
 
