@@ -1,6 +1,9 @@
 # Deploying Prefect on Google Cloud Platform (GCP)
-Welcome to the guide on setting up Prefect on GCP. This tutorial provides a step-by-step process to get you started on deploying and running Prefect on the Google Cloud Platform (GCP). Just to give you a high-level overview, Prefect requires a polling agent that is continuously checking for work. The tasks can be triggered by cron jobs or manually initiated by the user. The agent then spins up a CloudRun job and executes the Prefect flow. Let's dive right in!
+Welcome to the guide on setting up Prefect on GCP. This tutorial provides a step-by-step process to get you started on deploying and running Prefect on the Google Cloud Platform (GCP). 
 
+Just to give you a high-level overview, Prefect requires a polling agent that is continuously checking for work. The tasks can be triggered by cron jobs or manually initiated by the user. The agent then spins up a CloudRun job and executes the Prefect flow. 
+
+Let's dive right in!
 
 ## Step 1: Organizing Your Folders
 We're going to start by creating and organizing our folders in GCP. I recommend setting up your folders like this: Have a main infrastructure folder which can contain various projects like prefect or jenkins. It's an excellent way to keep your projects neat and organized.
