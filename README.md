@@ -8,7 +8,6 @@ ___
 ## Step 2: Register and Create API Key on Prefect Website
 Next, head on over to the Prefect website and sign up for their services. After you've completed your registration, go to your profile and create an API key. Save it somewhere. Also, make sure to set up a workspace while you're there.
 ___
-a
 ## Step 3: Set Up a VM Instance using Terraform
 I'm a fan of Terraform, and for good reason. It allows you to codify your infrastructure setup process and makes future modifications a breeze.
 
