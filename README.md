@@ -1,60 +1,54 @@
-# prefect-infra-gcp
-This repository explains how to deploy prefect on GCP.
-
-Giving a 30,000 feet overview prefect needs a polling agent that continously polling for work. Task can be forwarded to the agent by cron based triggers or initiated by user.
-
-The agent then spins up a CloudRun job and executes the prefect flow.
+# Deploying Prefect on Google Cloud Platform (GCP)
+Welcome to the guide on setting up Prefect on GCP. This tutorial provides a step-by-step process to get you started on deploying and running Prefect on the Google Cloud Platform (GCP). Just to give you a high-level overview, Prefect requires a polling agent that is continuously checking for work. The tasks can be triggered by cron jobs or manually initiated by the user. The agent then spins up a CloudRun job and executes the Prefect flow. Let's dive right in!
 ___
 
-## Setting up correct folders structure
-The first part is to create folders with GCP. I prefer organising my folders like
-infrastructure which will have projects like prefect or jenkins.
+## Step 1: Organizing Your Folders
+We're going to start by creating and organizing our folders in GCP. I recommend setting up your folders like this: Have a main infrastructure folder which can contain various projects like prefect or jenkins. It's an excellent way to keep your projects neat and organized.
 ___
-## Head to Prefect website - register and create API key and workspace
-Head on to prefect website and sign up for the service. Once signed up, head on to your profile and create API KEY and workspace. 
+## Step 2: Register and Create API Key on Prefect Website
+Next, head on over to the Prefect website and sign up for their services. After you've completed your registration, go to your profile and create an API key. Save it somewhere. Also, make sure to set up a workspace while you're there.
 ___
+a
+## Step 3: Set Up a VM Instance using Terraform
+I'm a fan of Terraform, and for good reason. It allows you to codify your infrastructure setup process and makes future modifications a breeze.
 
-## Create an VM instance - Terraform
-I prefer doing stuff by terraform way. This help us codify the process and makes it easier to make changes if we ever have to in future. 
+First, enable the VM Instance API for your project. With that done, we need to create a Service Account. A Service Account is how GCP provides users with the access to use GCP resources. For our purposes, we'll need a Service Account with the following roles:
 
-We'll start by enabling VM Instance API for the project. Once this is done we need to create a service account.
-
-Service Account is GCP's way of giving users access to utilise GCP resources. For our cases we need a service account with following roles:
 - Compute Instance Admin
 - Service Account User
 
-Once this is done we are ready to create a terraform file to deploy a our infrastructure.
+With that set up, we're ready to write our Terraform file and get our infrastructure deployed.
 
-To deloy infrastructure
+To deploy the infrastructure, enter these commands in your terminal:
 ```
 terraform init
 terraform apply --auto-approve
 ```
 
-Once this is successfully deployed, head on to console and VM instances and click on instance named `prefect`. On the top you can see `SSH`, click on the drop down `view gcloud command`. Now copy this command to clip board and run that command into terminal.
+After successful deployment, head over to the GCP console and click on VM instances. There, find the instance named prefect, and click on SSH at the top, then on the dropdown, select view gcloud command. Copy this command and run it in your terminal to connect to the VM instance.
 
-This should connect you to the VM instance.
-Now create a new file named startup.sh and go into the file
+Now let's create a new file named startup.sh and open it:
 ```
 touch startup.sh
 vim startup.sh
 ```
-Open the startup script and replace `your_prefect_api_key_here` with PREFECT_API_KEY you got from prefect website.
+Replace your_prefect_api_key_here with your actual PREFECT_API_KEY from the Prefect website in the startup script. If you have a CI/CD pipeline set up, you should pass the PREFECT_API_KEY from there.
 
-If you have a CI/CD pipeline implemented, you should pass `PREFECT_API_KEY` from it.
-
-Now copy the contents of startup.sh script into the file in VM instance. Save and Exit.
-Up next we need to make this file executable and run this file.
+Copy the contents of your local startup.sh script into the file on the VM instance, then save and exit. Now we need to make this file executable and run it:
 ```
 chmod +x ./startup.sh 
 ./startup.sh 
 ```
+*please note ypu can also add contents of startup.sh file into startup scripts in terraform. The script would execute all commands on startup. However this can get trciky.
 
-We are ready now. Execute the agent using the follwing commands
+Now we're all set. Start the agent with the following command:
 ```
 prefect agent start -q default
 ```
+The terminal should show prefect running.
 ____
 
-## Lastly, create a bucket for saving flows
-We'll need a bucket to save our flows to inorder to execute them over the cloud. Since my plan is to execute my flows using prefect gcp cloud run blocks, this step is required. 
+## Step 4: Create a Bucket for Flow Storage
+Lastly, we'll need a bucket to store our flows for cloud execution. As my plan is to execute flows using Prefect GCP Cloud Run tasks, this step is crucial.
+
+And voila, you're all set! We've successfully set up a Prefect deployment on GCP. Now you can begin executing your flows on the cloud.
