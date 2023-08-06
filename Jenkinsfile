@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'australia-southeast1-docker.pkg.dev/prefect-395009/jenkins-agent/agent:latest'
-            args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount the Docker socket if needed
-        }
-    }
+    agent any
     environment {
         GOOGLE_CREDENTIALS = credentials('prefect')
     }
